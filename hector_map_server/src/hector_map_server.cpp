@@ -67,7 +67,7 @@ public:
     std::string get_search_pos_service_name = "get_search_position";
     get_search_pos_service_ = pnh.advertiseService(get_search_pos_service_name, &OccupancyGridContainer::getSearchPosServiceCallback, this);
 
-    map_sub_ = nh.subscribe("map", 1, &OccupancyGridContainer::mapCallback, this);
+    map_sub_ = nh.subscribe(sub_topic, 1, &OccupancyGridContainer::mapCallback, this);
   }
 
   ~OccupancyGridContainer()
@@ -297,7 +297,7 @@ class HectorMapServer
       hector_drawings_ = new HectorDrawings();
       hector_drawings_->setNamespace("map_server");
 
-      mapContainer = new OccupancyGridContainer("map", "" ,private_nh, hector_drawings_,&tf_);
+      mapContainer = new OccupancyGridContainer("/global_manager/projected_map", "" ,private_nh, hector_drawings_,&tf_);
     }
 
     ~HectorMapServer()
